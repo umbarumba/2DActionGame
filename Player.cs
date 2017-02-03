@@ -57,6 +57,7 @@ public class Player : MonoBehaviour {
 				}
 			}
 		}
+		//ジャンプ中に
 		//上下の移動速度を取得
 		float velY = RB2D.velocity.y;
 		//移動速度が0.1より大きければ上昇
@@ -66,6 +67,15 @@ public class Player : MonoBehaviour {
 		//結果をアニメータービューの変数へ反映する
 		anim.SetBool("isJumping",isJumping);
 		anim.SetBool("isFalling", isFalling);
+
+		//ジャンプ中に
+		if (isJumping) {
+			//spaceキーが離されたら
+			if (Input.GetKeyUp (KeyCode.Space)) {
+				//速度を0にする
+				RB2D.velocity = Vector2.zero;
+			}
+		}
 
 		//クリア時に弾を撃たせない、ゲームオーバーにさせない
 		if (!gameClear) {
