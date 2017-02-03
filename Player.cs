@@ -67,6 +67,14 @@ public class Player : MonoBehaviour {
 		anim.SetBool("isJumping",isJumping);
 		anim.SetBool("isFalling", isFalling);
 
+		//ジャンプ中に
+		if (isJumping) {
+			//spaceキーが離されたら
+			if (Input.GetKeyUp (KeyCode.Space)) {
+				RB2D.velocity = Vector2.zero;
+			}
+		}
+
 		//クリア時に弾を撃たせない、ゲームオーバーにさせない
 		if (!gameClear) {
 			if (Input.GetKeyDown (KeyCode.LeftControl)) {
