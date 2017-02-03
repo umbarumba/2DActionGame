@@ -17,7 +17,7 @@ public class HPbar : MonoBehaviour {
 	}
 
 	public void GageUpDown (float per) {
-		rt.sizeDelta = new Vector2 (0, per * BarMax);
+		rt.sizeDelta = new Vector2 (50, BarMax * per);
 	}
 
 	
