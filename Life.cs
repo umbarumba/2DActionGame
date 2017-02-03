@@ -15,7 +15,7 @@ public class Life : MonoBehaviour {
 
 	public int HitPoint;//HP残量
 	public int MaxHitPoint = 20;//HPの最大値
-	private float HPper = 1;//HP残量パーセント
+	public float HPper = 1;//HP残量パーセント
 
 	// Use this for initialization
 	void Start () {
@@ -60,7 +60,7 @@ public class Life : MonoBehaviour {
 		if (HitPoint > MaxHitPoint) {
 			HitPoint = MaxHitPoint;
 		}
-		HPper = HitPoint / MaxHitPoint;//HPのパーセントを計算
+		HPper = (float)HitPoint / (float)MaxHitPoint;//HPのパーセントを計算
 		HPbar.GageUpDown(HPper);
 	}
 
