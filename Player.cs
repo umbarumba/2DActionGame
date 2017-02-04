@@ -44,7 +44,13 @@ public class Player : MonoBehaviour {
 			Physics2D.Linecast (
 				transform.position + transform.up * 1 + transform.right*1,
 				transform.position - transform.up * 0.05f  + transform.right*1,
-				groundLayer);
+				groundLayer)
+			||
+			Physics2D.Linecast (
+				transform.position + transform.up * 1 ,
+				transform.position - transform.up * 0.05f ,
+				groundLayer)
+			;
 
 		//クリア時にジャンプさせない
 		if (!gameClear) {
