@@ -60,7 +60,7 @@ public class Life : MonoBehaviour {
 		if (HitPoint > MaxHitPoint) {
 			HitPoint = MaxHitPoint;
 		}
-		HPper = (float)HitPoint / (float)MaxHitPoint;//HPのパーセントを計算
+		HPper = (float) HitPoint / (float)MaxHitPoint;//HPのパーセントを計算
 		HPbar.GageUpDown(HPper);
 	}
 
