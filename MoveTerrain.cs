@@ -17,13 +17,9 @@ public class MoveTerrain : MonoBehaviour {
 
 	// Update is called once per frame
 	void Update () {
-		
+		//Sin関数で上下させる
 		if (_isRendered) {
-			RB2D.velocity = new Vector2 (0, moveSpeed);
-			Debug.Log ("カメラに映ってます");
-		} else {
-			Debug.Log ("カメラに映ってません");
-			Debug.Log (RB2D.position);
+			RB2D.velocity = new Vector2 (0, moveSpeed * Mathf.Sin(Time.deltaTime));
 		}
 	}
 
