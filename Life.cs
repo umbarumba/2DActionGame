@@ -49,6 +49,7 @@ public class Life : MonoBehaviour {
 	public void LifeDown (int ap) {
 		//自分のHP-相手の攻撃力
 		HitPoint -= ap;
+		Debug.Log (ap);
 		HPper = (float)HitPoint / (float)MaxHitPoint;//HPのパーセントを計算
 		HPbar.GageUpDown (HPper);
 	}

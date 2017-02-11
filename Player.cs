@@ -90,7 +90,7 @@ public class Player : MonoBehaviour {
 
 		//クリア時に弾を撃たせない、ゲームオーバーにさせない
 		if (!gameClear) {
-			if (Input.GetKeyDown (KeyCode.LeftControl)) {
+			if (Input.GetKeyDown (KeyCode.Z)) {
 				anim.SetTrigger ("Shot");
 				Instantiate (bullet, transform.position + new Vector3 (0f, 1.2f, 0f), transform.rotation);
 			}
