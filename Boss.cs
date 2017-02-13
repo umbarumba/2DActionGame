@@ -36,8 +36,9 @@ public class Boss : MonoBehaviour {
 		if (_isRendered) {
 			T = Time.deltaTime;
 			Timer += T;
+
 			if (Timer >= 0f && Timer <= 0.1f) {
-				Debug.Log (_canShot1);
+				//Debug.Log (_canShot1);
 			}
 
 			if (Timer >= 2f && Timer <= 2.5f) {
@@ -47,7 +48,7 @@ public class Boss : MonoBehaviour {
 			//...なんらかの行動パターン↓
 		
 			if (Timer >= 4f) {
-				//パターンX
+				_canShot1 = true;
 				Timer = 0f;//タイマー初期化
 			}
 		}
