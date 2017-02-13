@@ -16,7 +16,7 @@ public class EnemyBullet : MonoBehaviour {
 		Rigidbody2D RB2D = GetComponent<Rigidbody2D> ();
 		lifescript = GameObject.FindGameObjectWithTag ("HP").GetComponent<Life> ();
 		RB2D.velocity = new Vector2 (speed * BossEnemy.transform.localScale.x * -1, RB2D.velocity.y);
-		Destroy (gameObject, 5);
+		Destroy (gameObject, 3);
 	
 	}
 
