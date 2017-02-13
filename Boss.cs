@@ -28,6 +28,7 @@ public class Boss : MonoBehaviour {
 	private void Start () {
 		Timer = 0f;
 		lifeScript = GameObject.FindGameObjectWithTag ("HP").GetComponent<Life> ();
+		Rend = GetComponent<Renderer> ();
 		BossHP = BossMaxHP;
 	}
 	
@@ -43,12 +44,11 @@ public class Boss : MonoBehaviour {
 
 			if (Timer >= 2f && Timer <= 2.5f) {
 				Shot1 ();
-				Debug.Log (_canShot1);
 			}
 			//...なんらかの行動パターン↓
 		
 			if (Timer >= 4f) {
-				_canShot1 = true;
+				_canShot1 = true;//初期化
 				Timer = 0f;//タイマー初期化
 			}
 		}
@@ -60,15 +60,10 @@ public class Boss : MonoBehaviour {
 
 	private void Shot1() {
 		if (_canShot1) {
+			//Bossの座標にEnemyBulletを置く
 			Instantiate (BulletPrefab, transform.position + new Vector3 (0f, 0f, 0f), transform.rotation);
 		}
 		_canShot1 = false;
-	}
-
-	void OnTriggerEnter2D (Collision2D col) {
-		if (col.gameObject.tag == "Bullet") {
-			StartCoroutine("Damage");
-		}
 	}
 
 	void OnCollisionEnter2D (Collision2D col) {
@@ -78,6 +73,10 @@ public class Boss : MonoBehaviour {
 			//LifeScriptのLifeDownメソッドを実行
 			lifeScript.LifeDown (atackpoint);
 		}
+		//自機の弾が当たった時
+		//if (col.gameObject.tag == "Bullet") {
+		//	StartCoroutine ("Damage");
+		//}
 	}
 
 	void OnWillRenderObject() {
@@ -89,6 +88,7 @@ public class Boss : MonoBehaviour {
 
 	public void LifeDown (int damage) {
 		BossHP -= damage;
+		StartCoroutine ("Damage");
 	}
 
 	private IEnumerator Damage () {
