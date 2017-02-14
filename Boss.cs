@@ -13,7 +13,7 @@ public class Boss : MonoBehaviour {
 	public GameObject BulletPrefab;
 	public GameObject explosion;
 
-	private bool _isRendered = false;
+	public bool _isRendered = false;
 	private bool _canShot1 = true;
 	private bool _canShot2 = true;
 

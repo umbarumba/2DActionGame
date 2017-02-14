@@ -14,6 +14,7 @@ public class Player : MonoBehaviour {
 	public GameObject bullet;
 
 	public Life lifeScript;
+	private Boss BossScript;
 
 	private Rigidbody2D RB2D;
 	private Animator anim;
@@ -32,6 +33,8 @@ public class Player : MonoBehaviour {
 		RB2D = GetComponent<Rigidbody2D> ();
 
 		Rend = GetComponent<Renderer> ();
+
+		BossScript = GameObject.FindGameObjectWithTag ("Boss").GetComponent<Boss> ();
 	}
 
 	void Update () {
@@ -121,14 +124,17 @@ public class Player : MonoBehaviour {
 				transform.localScale = temp;
 				//Wai->Dash
 				anim.SetBool ("Dash", true);
-				//画面中央から左に4移動した位置をユニティちゃんが超えたら
-				//＜予定＞↓Bossが画面に映った時、カメラの位置を固定
+
+
+				//画面中央から左に4移動した位置をユニティちゃんが超えたら	
 				if (transform.position.x > mainCamera.transform.position.x - 4) {
-					//カメラの位置を取得
+						//カメラの位置を取得
 					Vector3 cameraPos = mainCamera.transform.position;
-					//ユニティちゃんの位置から右に4移動した位置を画面中央にする
-					cameraPos.x = transform.position.x + 4;
-					mainCamera.transform.position = cameraPos;
+					if (BossScript._isRendered = false) {
+						//ユニティちゃんの位置から右に4移動した位置を画面中央にする
+						cameraPos.x = transform.position.x + 4;
+						mainCamera.transform.position = cameraPos;
+					}
 				}
 				//カメラ表示領域の左下をワールド座標に変換
 				Vector2 min = Camera.main.ViewportToWorldPoint (new Vector2 (0, 0));
