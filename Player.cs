@@ -74,6 +74,7 @@ public class Player : MonoBehaviour {
 		//移動速度が0.1より大きければ上昇
 		bool isJumping = velY > 0.1f ? true:false;
 		//移動速度が-0.1より小さければ下降
+		//＜予定＞↓isGrounedがtrueの時にfalseにする
 		bool isFalling = velY < -0.1f ? true:false;
 		//結果をアニメータービューの変数へ反映する
 		anim.SetBool("isJumping",isJumping);
@@ -121,6 +122,7 @@ public class Player : MonoBehaviour {
 				//Wai->Dash
 				anim.SetBool ("Dash", true);
 				//画面中央から左に4移動した位置をユニティちゃんが超えたら
+				//＜予定＞↓Bossが画面に映った時、カメラの位置を固定
 				if (transform.position.x > mainCamera.transform.position.x - 4) {
 					//カメラの位置を取得
 					Vector3 cameraPos = mainCamera.transform.position;
@@ -159,7 +161,7 @@ public class Player : MonoBehaviour {
 
 	void OnCollisionEnter2D (Collision2D col) {
 		//Enemyとぶつかった時にコルーチンを実行
-		if (col.gameObject.tag == "Enemy") {
+		if (col.gameObject.tag == "Enemy" || col.gameObject.tag == "Boss") {
 			StartCoroutine ("Damage");
 		}
 	}
