@@ -15,12 +15,15 @@ public class Boss : MonoBehaviour {
 
 	private bool _isRendered = false;
 	private bool _canShot1 = true;
+	private bool _canShot2 = true;
 
 	private Life lifeScript;
 
 	public int BossMaxHP = 20;
 	public int BossHP;
 	public int atackpoint;
+	public int JumppowerY = 500;
+	public int JumppowerX = 100;
 
 	private Renderer Rend;
 
@@ -29,6 +32,7 @@ public class Boss : MonoBehaviour {
 		Timer = 0f;
 		lifeScript = GameObject.FindGameObjectWithTag ("HP").GetComponent<Life> ();
 		Rend = GetComponent<Renderer> ();
+		RB2D = GetComponent<Rigidbody2D> ();
 		BossHP = BossMaxHP;
 	}
 	
@@ -46,9 +50,13 @@ public class Boss : MonoBehaviour {
 				Shot1 ();
 			}
 			//...なんらかの行動パターン↓
+			if (Timer >= 6f && Timer <= 6.5f) {
+				Shot2 ();
+			}
 		
-			if (Timer >= 4f) {
+			if (Timer >= 8f) {
 				_canShot1 = true;//初期化
+				_canShot2 = true;
 				Timer = 0f;//タイマー初期化
 			}
 		}
@@ -62,9 +70,27 @@ public class Boss : MonoBehaviour {
 		if (_canShot1) {
 			//Bossの座標にEnemyBulletを置く
 			Instantiate (BulletPrefab, transform.position + new Vector3 (0f, 0f, 0f), transform.rotation);
+			RB2D.AddForce (Vector2.up * JumppowerY);
+			RB2D.AddForce (Vector2.right * JumppowerX * -1);
+			Vector2 temp = transform.localScale;
+			temp.x = 1;
+			transform.localScale = temp;
 		}
 		_canShot1 = false;
 	}
+
+	private void Shot2() {
+		if (_canShot2) {
+			Instantiate (BulletPrefab, transform.position + new Vector3 (0f, 0f, 0f), transform.rotation);
+			RB2D.AddForce (Vector2.up * JumppowerY);
+			RB2D.AddForce (Vector2.right * JumppowerX);
+			Vector2 temp = transform.localScale;
+			temp.x = -1;
+			transform.localScale = temp;
+		}
+		_canShot2 = false;
+	}
+
 
 	void OnCollisionEnter2D (Collision2D col) {
 		//UnityChanとぶつかった時
