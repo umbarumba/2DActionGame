@@ -25,6 +25,8 @@ public class Boss : MonoBehaviour {
 	public int JumppowerY = 500;
 	public int JumppowerX = 100;
 
+	public Vector2 PositionOffset;
+
 	private Renderer Rend;
 
 	// Use this for initialization
@@ -34,6 +36,7 @@ public class Boss : MonoBehaviour {
 		Rend = GetComponent<Renderer> ();
 		RB2D = GetComponent<Rigidbody2D> ();
 		BossHP = BossMaxHP;
+		PositionOffset = RB2D.transform.position;
 	}
 	
 	// Update is called once per frame
@@ -46,15 +49,17 @@ public class Boss : MonoBehaviour {
 				//Debug.Log (_canShot1);
 			}
 
-			if (Timer >= 2f && Timer <= 2.5f) {
-				Shot1 ();
+			if (Timer >= 1f && Timer <= 1.5f) {
+				StartCoroutine ("Shot1");
+				_canShot1 = false;
 			}
 			//...なんらかの行動パターン↓
-			if (Timer >= 6f && Timer <= 6.5f) {
-				Shot2 ();
+			if (Timer >= 4f && Timer <= 4.5f) {
+				//Shot2 ();
 			}
 		
-			if (Timer >= 8f) {
+			if (Timer >= 5.5f) {
+				Debug.Log (_canShot1);
 				_canShot1 = true;//初期化
 				_canShot2 = true;
 				Timer = 0f;//タイマー初期化
@@ -66,30 +71,32 @@ public class Boss : MonoBehaviour {
 		}
 	}
 
-	private void Shot1() {
+	private IEnumerator Shot1() {
 		if (_canShot1) {
 			//Bossの座標にEnemyBulletを置く
-			Instantiate (BulletPrefab, transform.position + new Vector3 (0f, 0f, 0f), transform.rotation);
-			RB2D.AddForce (Vector2.up * JumppowerY);
-			RB2D.AddForce (Vector2.right * JumppowerX * -1);
-			Vector2 temp = transform.localScale;
-			temp.x = 1;
-			transform.localScale = temp;
+			int count = 3;
+			while (count > 0) {
+				Instantiate (BulletPrefab, transform.position + new Vector3 (0f, 0f, 0f), transform.rotation);
+				Debug.Log (count);
+				yield return new WaitForSeconds (0.7f);
+				Vector2 temp = transform.localScale;
+				temp.x = 1;
+				transform.localScale = temp;
+				count --;
+			}
+			_canShot1 = false;
 		}
-		_canShot1 = false;
 	}
 
-	private void Shot2() {
-		if (_canShot2) {
-			Instantiate (BulletPrefab, transform.position + new Vector3 (0f, 0f, 0f), transform.rotation);
-			RB2D.AddForce (Vector2.up * JumppowerY);
-			RB2D.AddForce (Vector2.right * JumppowerX);
-			Vector2 temp = transform.localScale;
-			temp.x = -1;
-			transform.localScale = temp;
-		}
-		_canShot2 = false;
-	}
+	//private void Shot2() {
+	//	if (_canShot2) {
+	//		Instantiate (BulletPrefab, transform.position + new Vector3 (0f, 0f, 0f), transform.rotation);
+	//		Vector2 temp = transform.localScale;
+	//		temp.x = -1;
+	//		transform.localScale = temp;
+	//	}
+	//	_canShot2 = false;
+	//}
 
 
 	void OnCollisionEnter2D (Collision2D col) {

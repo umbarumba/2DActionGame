@@ -17,15 +17,17 @@ public class EnemyBullet : MonoBehaviour {
 
 		Rigidbody2D RB2D = GetComponent<Rigidbody2D> ();
 
+		RB2D.velocity = new Vector2 (speed * BossEnemy.transform.localScale.x * -1, RB2D.velocity.y);
+
 		lifescript = GameObject.FindGameObjectWithTag ("HP").GetComponent<Life> ();
 
 		Vector2 temp = transform.localScale;
 
 		//弾の向きをBossに合わせる
-		temp.x = player.transform.localScale.x;
+		temp.x = BossEnemy.transform.localScale.x;
 		transform.localScale = temp;
 
-		RB2D.velocity = new Vector2 (speed * BossEnemy.transform.localScale.x * -1, RB2D.velocity.y);
+
 
 		Destroy (gameObject, 3);
 	

@@ -130,7 +130,7 @@ public class Player : MonoBehaviour {
 				if (transform.position.x > mainCamera.transform.position.x - 4) {
 						//カメラの位置を取得
 					Vector3 cameraPos = mainCamera.transform.position;
-					if (BossScript._isRendered = false) {
+					if (BossScript._isRendered == false) {
 						//ユニティちゃんの位置から右に4移動した位置を画面中央にする
 						cameraPos.x = transform.position.x + 4;
 						mainCamera.transform.position = cameraPos;
@@ -166,13 +166,16 @@ public class Player : MonoBehaviour {
 	}
 
 	void OnCollisionEnter2D (Collision2D col) {
+		Debug.Log (col.gameObject.tag);
 		//Enemyとぶつかった時にコルーチンを実行
-		if (col.gameObject.tag == "Enemy" || col.gameObject.tag == "Boss") {
+		if (col.gameObject.tag == "Enemy" || col.gameObject.tag == "Boss" || col.gameObject.tag == "EnemyBullet") {
+			
 			StartCoroutine ("Damage");
 		}
 	}
 
 	IEnumerator Damage () {
+		Debug.Log ("Damageコルーチン発動");
 		//レイヤーをPlayerDamageに変更
 		gameObject.layer = LayerMask.NameToLayer ("PlayerDamage");
 		//while文を10回ループ
@@ -197,6 +200,10 @@ public class Player : MonoBehaviour {
 		if (col.tag == "ClearZone") {
 			//ゲームクリアー
 			gameClear = true;
+		}
+
+		if (col.tag == "EnemyBullet") {
+			StartCoroutine ("Damage");
 		}
 	}
     
